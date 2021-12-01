@@ -2167,6 +2167,10 @@
       var self = this;
       var isIOS = Howler._navigator && Howler._navigator.vendor.indexOf('Apple') >= 0;
 
+      if (!node.bufferSource) {
+        return self;
+      }
+
       if (Howler._scratchBuffer && node.bufferSource) {
         node.bufferSource.onended = null;
         node.bufferSource.disconnect(0);
@@ -2266,6 +2270,7 @@
         self._node.addEventListener('ended', self._endFn, false);
 
         // Setup the new audio node.
+        self._node.crossOrigin = 'anonymous';
         self._node.src = parent._src;
         self._node.preload = parent._preload === true ? 'auto' : parent._preload;
         self._node.volume = volume * Howler.volume();
